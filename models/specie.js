@@ -1,4 +1,4 @@
-const db = require("./knexClient.js");
+const knex = require("./knexClient.js");
 
 /**
  * Va chercher l'ensemble des espèces
@@ -6,7 +6,7 @@ const db = require("./knexClient.js");
  * @returns {Array<Object>} Les espèces.
  */
 const findAll = async () => {
-  const species = await db.from("species").select("*");
+  const species = await knex.from("species").select("*");
   return species;
 };
 
@@ -17,26 +17,26 @@ const findAll = async () => {
  * @returns {Array<Object>} Une espèce.
  */
 const findOne = async (id) => {
-  const specie = await db.from("species").select("*").where({ id });
+  const specie = await knex.from("species").select("*").where({ id });
   return specie;
 };
 
 /**
- * Insère une nouvelle espèce dans la db
+ * Insère une nouvelle espèce dans la knex
  * @async
  * @param {SpeciePayload} payload - le payload à insérer.
  */
 const insert = async (payload) => {
-  await db.from("species").insert(payload);
+  await knex.from("species").insert(payload);
 };
 
 /**
- * Supprimer une espèce dans la db
+ * Supprimer une espèce dans la knex
  * @async
  * @param {number} id - L'id de l'espèce à supprimer.
  */
 const destroy = async (id) => {
-  await db.from("species").where({ id }).del();
+  await knex.from("species").where({ id }).del();
 };
 
 /**
@@ -45,7 +45,7 @@ const destroy = async (id) => {
  * @param {SpeciePayload} payload - le payload de l'espèce à modifier.
  */
 const update = async (id, payload) => {
-  await db.from("species").update(payload).where({ id });
+  await knex.from("species").update(payload).where({ id });
 };
 
 module.exports = { findAll, findOne, insert, destroy, update };

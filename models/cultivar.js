@@ -1,4 +1,4 @@
-const db = require("./knexClient");
+const knex = require("./knexClient");
 
 /**
  * Va chercher l'ensemble des cultivars ainsi que les espèces associés
@@ -6,7 +6,7 @@ const db = require("./knexClient");
  * @returns {Array<Object>} Les cultivars ainsi que les espèces.
  */
 const findAll = async () => {
-  const cultivars = await db
+  const cultivars = await knex
     .from("variety")
     .select(
       "variety.id",
@@ -26,26 +26,26 @@ const findAll = async () => {
  * @returns {Array<Object>} Un cultivar.
  */
 const findOne = async (id) => {
-  const cultivar = await db.from("variety").select("*").where({ id });
+  const cultivar = await knex.from("variety").select("*").where({ id });
   return cultivar;
 };
 
 /**
- * Insère un nouveau cultivar dans la db
+ * Insère un nouveau cultivar dans la knex
  * @async
  * @param {CultivarPayload} newCultivar - le payload à insérer.
  */
 const insert = async (payload) => {
-  await db.from("variety").insert(payload);
+  await knex.from("variety").insert(payload);
 };
 
 /**
- * Supprimer un cultivar dans la db
+ * Supprimer un cultivar dans la knex
  * @async
  * @param {number} id - L'id du cultivar à supprimer.
  */
 const destroy = async (id) => {
-  await db.from("variety").where({ id }).del();
+  await knex.from("variety").where({ id }).del();
 };
 
 /**
@@ -54,7 +54,7 @@ const destroy = async (id) => {
  * @param {CultivarPayload} payload - le payload du cultivar à modifier.
  */
 const update = async (id, payload) => {
-  await db.from("variety").update(payload).where({ id });
+  await knex.from("variety").update(payload).where({ id });
 };
 
 module.exports = { findAll, findOne, insert, destroy, update };
