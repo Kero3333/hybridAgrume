@@ -1,6 +1,23 @@
 const knex = require("./knexClient.js");
 
 /**
+ * Un objet JS représentant une espèce issu de la db
+ * @typedef Specie
+ * @property {number} id - l'id d'une espèce.
+ * @property {string} scientific_name - le nom scientifique de l'espèce.
+ * @property {number} common_name - le nom commun de l'espèce.
+ * @property {number} family - la famille de l'espèce.
+ */
+
+/**
+ * Un object JS représentant des données à insérer/mettre à jour dans la table species
+ * @typedef SpeciePayload
+ * @property {string} scientific_name - le nom scientifique de l'espèce.
+ * @property {number} common_name - le nom commun de l'espèce.
+ * @property {number} family - la famille de l'espèce.
+ */
+
+/**
  * Va chercher l'ensemble des espèces
  * @async
  * @returns {Array<Object>} Les espèces.
@@ -25,9 +42,10 @@ const findOne = async (id) => {
  * Insère une nouvelle espèce dans la knex
  * @async
  * @param {SpeciePayload} payload - le payload à insérer.
+ * @returns {Array<Object>} L'id de l'espèce insérer.
  */
 const insert = async (payload) => {
-  await knex.from("species").insert(payload);
+  return await knex.from("species").insert(payload, ["id"]);
 };
 
 /**
@@ -48,4 +66,21 @@ const update = async (id, payload) => {
   await knex.from("species").update(payload).where({ id });
 };
 
-module.exports = { findAll, findOne, insert, destroy, update };
+// const findByFamily = async (family) => {
+//   return await knex.from("species").select("*").where({ family });
+// };
+
+/**
+ * Va chercher des espèces en fonctions de leurs familles
+ * @async
+ * @param {string} family - Le nom de la famille.
+ * @returns {Array<Object>} Les espèces.
+ */
+const findByFamily = async (family) => {
+  return await knex
+    .from("species")
+    .select("*")
+    .whereRaw(`family::text LIKE '${family}%'`);
+};
+
+module.exports = { findAll, findOne, insert, destroy, update, findByFamily };

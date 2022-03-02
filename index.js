@@ -14,7 +14,7 @@ const specie = require("./models/specie.js");
 //   species_id: 2,
 // };
 
-// cultivar.insert(newCultivar);
+// cultivar.insert(newCultivar).then(console.table);
 // cultivar.destroy(32);
 
 // const newSpecie = {
@@ -47,3 +47,11 @@ const specie = require("./models/specie.js");
 // specie.update(1, updateSpecie).then(() => {
 //   specie.findOne(1).then(console.table);
 // });
+
+// cultivar.findByMinJuiciness(3).then(console.table);
+// cultivar.findByMaxJuiciness(2).then(console.table);
+// cultivar.findByMinBitterness(3).then(console.table);
+//cultivar.findByMaxBitterness(2).then(console.table);
+
+// specie.findByFamily("citr").then(console.table);
+//cultivar.findBySpecies("citr").then(console.table);
