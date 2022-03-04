@@ -30,6 +30,8 @@ const findAll = async () => {
     .from("variety_with_full_name")
     .select(
       "variety_with_full_name.cultivar",
+      "variety_with_full_name.bitterness",
+      "variety_with_full_name.juiciness",
       "species.id as specie_id",
       "species.common_name",
       "species.family"
@@ -68,7 +70,7 @@ const insert = async (payload) => {
  * @param {number} id - L'id du cultivar à supprimer.
  */
 const destroy = async (id) => {
-  await knex.from("variety").where({ id }).del();
+  return await knex.from("variety").where({ id }).del(["id"]);
 };
 
 /**
@@ -77,7 +79,7 @@ const destroy = async (id) => {
  * @param {CultivarPayload} payload - le payload du cultivar à modifier.
  */
 const update = async (id, payload) => {
-  await knex.from("variety").update(payload).where({ id });
+  return await knex.from("variety").update(payload, ["id"]).where({ id });
 };
 
 /**
@@ -195,6 +197,12 @@ const findBySpecies = async (speciesName) => {
 //     ]);
 // };
 
+/**
+ * Va chercher des variétés en fonctions de leurs amertumes et/ou de leurs jutosités
+ * @async
+ * @param {Object<Object>} criteria - Les critères de seletion de l'amertume et de la justosité
+ * @returns {Array<Object>} les variétés.
+ */
 const findBetween = async (criteria) => {
   const criteriaDefault = {
     bitterness: { min: 0, max: 5 },

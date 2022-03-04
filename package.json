@@ -4,7 +4,7 @@
   "description": "La société Hybrid'agrume vous contacte pour son projet d'application. Il s'agit d'une entreprise de biochimie qui travaille dans le croisement d'espèces de fruit, spécialisée dans les agrumes.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "nodemon server.js",
     "test": "jest"
   },
   "repository": {
@@ -20,9 +20,12 @@
   "homepage": "https://github.com/Kero3333/hybridAgrume#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
+    "express": "^4.17.3",
     "jest": "^27.5.1",
+    "joi": "^17.6.0",
     "knex": "^1.0.3",
     "lodash": "^4.17.21",
+    "nodemon": "^2.0.15",
     "pg": "^8.7.3"
   }
 }
