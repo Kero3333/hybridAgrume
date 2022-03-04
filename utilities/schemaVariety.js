@@ -5,7 +5,7 @@ const validate = (obj) => {
     cultivar: Joi.string().required(),
     bitterness: Joi.number().required(),
     juiciness: Joi.number().required(),
-    specie_id: Joi.number().required(),
+    species_id: Joi.number().required(),
   });
   return schema.validate(obj);
 };

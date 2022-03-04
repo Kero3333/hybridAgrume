@@ -57,7 +57,7 @@ router.delete("/:id", async (req, res) => {
   if (!destroyed[0]) {
     return res.status(404).send("not found");
   }
-  res.status(204).json(destroyed[0]);
+  res.status(204).json();
 });
 
 router.post("/filter/scores", async (req, res) => {
