@@ -52,6 +52,7 @@ const insert = async (payload) => {
  * Supprimer une espèce dans la knex
  * @async
  * @param {number} id - L'id de l'espèce à supprimer.
+ * @returns {Array<Object>} L'id de l'espèce supprimer.
  */
 const destroy = async (id) => {
   return await knex.from("species").where({ id }).del(["id"]);
@@ -61,6 +62,7 @@ const destroy = async (id) => {
  * Met à jour une espèce (toutes les informations doivent être fournies)
  * @param {number} id - l'id de l'espèce à modifier.
  * @param {SpeciePayload} payload - le payload de l'espèce à modifier.
+ * @returns {Array<Object>} L'id de l'espèce modifier.
  */
 const update = async (id, payload) => {
   return await knex.from("species").update(payload, ["id"]).where({ id });

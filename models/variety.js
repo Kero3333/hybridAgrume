@@ -68,6 +68,7 @@ const insert = async (payload) => {
  * Supprimer un cultivar dans la db
  * @async
  * @param {number} id - L'id du cultivar à supprimer.
+ * @returns {Array<Object>} L'id du cultivar supprimer.
  */
 const destroy = async (id) => {
   return await knex.from("variety").where({ id }).del(["id"]);
@@ -77,6 +78,7 @@ const destroy = async (id) => {
  * Met à jour un cultivar (toutes les informations doivent être fournies)
  * @param {number} id - l'id du cultivar à modifier.
  * @param {CultivarPayload} payload - le payload du cultivar à modifier.
+ * @returns {Array<Object>} L'id du cultivar modifier.
  */
 const update = async (id, payload) => {
   return await knex.from("variety").update(payload, ["id"]).where({ id });
@@ -134,19 +136,6 @@ const findByMaxBitterness = async (maxBi) => {
     .where("bitterness", "<=", maxBi);
 };
 
-// const findBySpecies = async (speciesName) => {
-//   return await knex
-//     .from("variety")
-//     .join("species", { "species.id": "variety..species_id" })
-//     .select(
-//       "variety..cultivar",
-//       "variety..bitterness",
-//       "variety..juiciness",
-//       "species.common_name as specie_name"
-//     )
-//     .where({ "species.common_name": speciesName });
-// };
-
 /**
  * Va chercher des variétés en fonctions de leurs espèces
  * @async
@@ -165,37 +154,6 @@ const findBySpecies = async (speciesName) => {
     )
     .whereLike("species.common_name", `${speciesName}%`);
 };
-
-// const findBetween = async (criteria) => {
-//   if (!criteria.bitterness) {
-//     criteria.bitterness = {};
-//   }
-//   if (!criteria.bitterness.min) {
-//     criteria.bitterness.min = 0;
-//   }
-//   if (!criteria.bitterness.max) {
-//     criteria.bitterness.max = 5;
-//   }
-
-//   if (!criteria.juiciness) {
-//     criteria.juiciness = {};
-//   }
-//   if (!criteria.juiciness.min) {
-//     criteria.juiciness.min = 0;
-//   }
-//   if (!criteria.juiciness.max) {
-//     criteria.juiciness.max = 5;
-//   }
-
-//   return await knex
-//     .from("variety")
-//     .select("*")
-//     .whereBetween("juiciness", [criteria.juiciness.min, criteria.juiciness.max])
-//     .whereBetween("bitterness", [
-//       criteria.bitterness.min,
-//       criteria.bitterness.max,
-//     ]);
-// };
 
 /**
  * Va chercher des variétés en fonctions de leurs amertumes et/ou de leurs jutosités
